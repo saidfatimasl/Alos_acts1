@@ -45,12 +45,12 @@ router.get('/', (req, res) => {
 // Create an account
 router.post('/accounts', (req, res) => {
   // Check mandatory request parameters
-  if (!req.body.user || !req.body.currency) {
+  if (!req.body.livres || !req.body.currency) {
     return res.status(400).json({ error: 'Missing parameters' });
   }
 
   // Check if account already exists
-  if (db[req.body.user]) {
+  if (db[req.body.livres]) {
     return res.status(409).json({ error: 'User already exists' });
   }
 
@@ -65,13 +65,13 @@ router.post('/accounts', (req, res) => {
 
   // Create account
   const account = {
-    livres: req.body.user,
+    livres: req.body.livres,
     currency: req.body.currency,
-    description: req.body.description || `${req.body.user}'s budget`,
+    description: req.body.description || `${req.body.livres}'s budget`,
     balance: balance || 0,
     transactions: [],
   };
-  db[req.body.user] = account;
+  db[req.body.livres] = account;
 
   return res.status(201).json(account);
 });
@@ -111,11 +111,11 @@ router.delete('/accounts/:livres', (req, res) => {
 
 // Add a transaction to a specific account
 router.post('/accounts/:user/transactions', (req, res) => {
-  const account = db[req.params.user];
+  const account = db[req.params.livres];
 
   // Check if account exists
   if (!account) {
-    return res.status(404).json({ error: 'User does not exist' });
+    return res.status(404).json({ error: 'livres does not exist' });
   }
 
   // Check mandatory requests parameters
@@ -148,9 +148,14 @@ router.post('/accounts/:user/transactions', (req, res) => {
   // Add transaction
   const transaction = {
     id,
-    date: req.body.date,
-    object: req.body.object,
-    amount,
+    nbre_de_prets,
+    titre ,
+    rang,
+    secteur ,
+    auteur ,
+    nbre_d_exemplaires ,
+    support ,
+    annee,
   };
   account.transactions.push(transaction);
 
