@@ -65,7 +65,7 @@ router.post('/accounts', (req, res) => {
 
   // Create account
   const account = {
-    user: req.body.user,
+    livres: req.body.user,
     currency: req.body.currency,
     description: req.body.description || `${req.body.user}'s budget`,
     balance: balance || 0,
@@ -79,12 +79,12 @@ router.post('/accounts', (req, res) => {
 // ----------------------------------------------
 
 // Get all data for the specified account
-router.get('/accounts/:user', (req, res) => {
-  const account = db[req.params.user];
+router.get('/accounts/:livres', (req, res) => {
+  const account = db[req.params.livres];
 
   // Check if account exists
   if (!account) {
-    return res.status(404).json({ error: 'User does not exist' });
+    return res.status(404).json({ error: 'livres does not exist' });
   }
 
   return res.json(account);
@@ -93,16 +93,16 @@ router.get('/accounts/:user', (req, res) => {
 // ----------------------------------------------
 
 // Remove specified account
-router.delete('/accounts/:user', (req, res) => {
-  const account = db[req.params.user];
+router.delete('/accounts/:livres', (req, res) => {
+  const account = db[req.params.livres];
 
   // Check if account exists
   if (!account) {
-    return res.status(404).json({ error: 'User does not exist' });
+    return res.status(404).json({ error: 'livres does not exist' });
   }
 
   // Removed account
-  delete db[req.params.user];
+  delete db[req.params.livres];
 
   res.sendStatus(204);
 });
@@ -163,12 +163,12 @@ router.post('/accounts/:user/transactions', (req, res) => {
 // ----------------------------------------------
 
 // Remove specified transaction from account
-router.delete('/accounts/:user/transactions/:id', (req, res) => {
-  const account = db[req.params.user];
+router.delete('/accounts/:livres/transactions/:id', (req, res) => {
+  const account = db[req.params.livres];
 
   // Check if account exists
   if (!account) {
-    return res.status(404).json({ error: 'User does not exist' });
+    return res.status(404).json({ error: 'livres does not exist' });
   }
 
   const transactionIndex = account.transactions.findIndex(
