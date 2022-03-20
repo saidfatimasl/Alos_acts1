@@ -1,0 +1,13 @@
+GET http://localhost:3000/livres/
+
+POST http://localhost:3000/livres/
+Content-Type: application/json
+{
+   
+  "secteur": "Jeunesse",
+  "auteur": "Cohen, Jacqueline",
+  "nbre_d_exemplaires": 5,
+  "support": "Bande dessinée",
+  "annee": "2021"
+}
+
